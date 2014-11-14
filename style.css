@@ -400,16 +400,9 @@ body {
   font-size: 17px;
   line-height: 1.4;
   word-wrap: break-word;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   min-height: 100vh;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -437,8 +430,7 @@ h4, h5, h6 {
 a {
   color: black;
   text-decoration: none;
-  -webkit-transition: all 0.2s ease;
-          transition: all 0.2s ease;
+  transition: all 0.2s ease;
   word-wrap: break-word;
 }
 
@@ -470,10 +462,7 @@ a:active {
 /* Layout
 -------------------------------------------------------------- */
 #page {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 #content {
@@ -656,8 +645,7 @@ a:active {
 .main-navigation {
   font-family: "Oswald", "Helvetica Nueue", sans-serif;
   font-size: 14px;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
+  touch-action: manipulation;
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
   letter-spacing: .03em;
@@ -717,8 +705,7 @@ a:active {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
-  -webkit-transition: -webkit-transform .2s ease-in-out;
-          transition: transform .2s ease-in-out;
+  transition: transform .2s ease-in-out;
 }
 
 /* Primary Navigation */
@@ -899,7 +886,8 @@ a:active {
   }
 
   /* Social */
-  .main-navigation .social span {
+  .main-navigation .social span,
+  #footer-navigation .social span {
     margin: 0;
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
@@ -908,7 +896,9 @@ a:active {
     overflow: hidden;
   }
   .main-navigation .social a:before,
-  .main-navigation .menu-search a:before {
+  .main-navigation .menu-search a:before,
+  #footer-navigation .social a:before,
+  #footer-navigation .menu-search a:before {
     display: inline-block;
     font-family: 'cascade-icons';
     font-style: normal;
@@ -917,50 +907,94 @@ a:active {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  .main-navigation .social a[href*="behance.com"]:before {
+  .main-navigation .social a[href*="behance.com"]:before,
+  #footer-navigation .social a[href*="behance.com"]:before {
     content: '\f1b4';
   }
-  .main-navigation .social a[href*="dribbble.com"]:before {
+  .main-navigation .social a[href*="dribbble.com"]:before,
+  #footer-navigation .social a[href*="dribbble.com"]:before {
     content: '\f17d';
   }
-  .main-navigation .social a[href*="facebook.com"]:before {
+  .main-navigation .social a[href*="facebook.com"]:before,
+  #footer-navigation .social a[href*="facebook.com"]:before {
     content: '\f09a';
   }
-  .main-navigation .social a[href*="flickr.com"]:before {
+  .main-navigation .social a[href*="flickr.com"]:before,
+  #footer-navigation .social a[href*="flickr.com"]:before {
     content: '\f16e';
   }
-  .main-navigation .social a[href*="github.com"]:before {
+  .main-navigation .social a[href*="github.com"]:before,
+  #footer-navigation .social a[href*="github.com"]:before {
     content: '\f09b';
   }
-  .main-navigation .social a[href*="linkedin.com"]:before {
+  .main-navigation .social a[href*="linkedin.com"]:before,
+  #footer-navigation .social a[href*="linkedin.com"]:before {
     content: '\f0e1';
   }
-  .main-navigation .social a[href*="pinterest.com"]:before {
+  .main-navigation .social a[href*="pinterest.com"]:before,
+  #footer-navigation .social a[href*="pinterest.com"]:before {
     content: '\f0d2';
   }
-  .main-navigation .social a[href*="plus.google.com"]:before {
+  .main-navigation .social a[href*="plus.google.com"]:before,
+  #footer-navigation .social a[href*="plus.google.com"]:before {
     content: '\f0d5';
   }
   .main-navigation .social a[href*="instagr.am"]:before,
-  .main-navigation .social a[href*="instagram.com"]:before {
+  .main-navigation .social a[href*="instagram.com"]:before,
+  #footer-navigation .social a[href*="instagr.am"]:before,
+  #footer-navigation .social a[href*="instagram.com"]:before {
     content: '\f16d';
   }
-  .main-navigation .social a[href*="skype.com"]:before {
+  .main-navigation .social a[href*="skype.com"]:before,
+  #footer-navigation .social a[href*="skype.com"]:before {
     content: '\f17e';
   }
-  .main-navigation .social a[href*="spotify.com"]:before {
+  .main-navigation .social a[href*="spotify.com"]:before,
+  #footer-navigation .social a[href*="spotify.com"]:before {
     content: '\f1bc';
   }
-  .main-navigation .social a[href*="tumblr.com"]:before {
+  .main-navigation .social a[href*="tumblr.com"]:before,
+  #footer-navigation .social a[href*="tumblr.com"]:before {
     content: '\f173';
   }
-  .main-navigation .social a[href*="twitter.com"]:before {
+  .main-navigation .social a[href*="twitter.com"]:before,
+  #footer-navigation .social a[href*="twitter.com"]:before {
     content: '\f099';
   }
-  .main-navigation .social a[href*="vimeo.com"]:before {
+  .main-navigation .social a[href*="vimeo.com"]:before,
+  #footer-navigation .social a[href*="vimeo.com"]:before {
     content: '\f194';
   }
 }
+/* Footer Navigation */
+#footer-navigation {
+  font-family: "Oswald", "Helvetica Nueue", sans-serif;
+  font-size: 13px;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  letter-spacing: .03em;
+  float: right;
+}
+#footer-navigation ul {
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#footer-navigation li {
+  display: inline-block;
+  font-weight: 300;
+}
+#footer-navigation a {
+  padding: 0 15px;
+  border: none;
+  display: inline-block;
+}
+#footer-navigation ul a:last-of-type {
+  padding-right: 0;
+}
+
 /* Content
 --------------------------------------------------------------*/
 .hentry {
@@ -1651,6 +1685,7 @@ a:active {
 #colophon {
   font-family: "Oswald", "Helvetica Nueue", sans-serif;
   font-size: 13px;
+  line-height: 2;
   padding: 30px 0;
   background: #000;
   color: #999;
@@ -1659,6 +1694,10 @@ a:active {
 
 #colophon a {
   color: #fff;
+}
+
+#colophon .site-info {
+  float: left;
 }
 
 @media screen and (min-width: 510px) and (max-width: 880px) {

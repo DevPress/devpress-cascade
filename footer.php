@@ -21,11 +21,24 @@
 
 <footer id="colophon" class="site-footer" role="contentinfo">
 	<div class="col-width">
+
 		<?php if ( get_theme_mod( 'footer-text', customizer_library_get_default( 'footer-text' ) ) != '' ) : ?>
 		<div class="site-info">
 			<?php echo get_theme_mod( 'footer-text', customizer_library_get_default( 'footer-text' ) ); ?>
 		</div><!-- .site-info -->
 		<?php endif; ?>
+
+		<?php if ( has_nav_menu( 'footer' ) ) : ?>
+		<nav id="footer-navigation" class="clearfix" role="navigation">
+			<?php wp_nav_menu( array(
+				'theme_location' => 'footer',
+				'link_before' => '<span>',
+				'link_after' => '</span>',
+				'depth' => -1
+			) ); ?>
+		</nav>
+		<?php endif; ?>
+
 	</div><!-- .col-width -->
 </footer><!-- #colophon -->
 

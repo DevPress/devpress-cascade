@@ -1,6 +1,6 @@
 # Cascade
 
-Cascade is an elegant WordPress theme for displaying your content. Add your own logo, choose the perfect typography, and update header colors if you choose. Features two widget areas and multiple layout options. Works beautifully on small screens and mobile devices.
+Cascade is an elegant WordPress theme for displaying your content. Add your own logo, choose the perfect typography, and update header colors if you choose. Features two widget areas, three menu locations, and multiple layout options. Works beautifully on small screens and mobile devices.
 
 ## Installation Instructions
 

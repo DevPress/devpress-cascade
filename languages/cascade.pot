@@ -116,27 +116,31 @@ msgstr ""
 msgid "Secondary Menu"
 msgstr ""
 
-#: functions.php:81
-msgid "1 Column Wide"
+#: functions.php:53
+msgid "Footer Menu"
 msgstr ""
 
 #: functions.php:82
-msgid "1 Column Narrow"
+msgid "1 Column Wide"
 msgstr ""
 
 #: functions.php:83
-msgid "2 Columns: Content / Sidebar"
+msgid "1 Column Narrow"
 msgstr ""
 
 #: functions.php:84
+msgid "2 Columns: Content / Sidebar"
+msgstr ""
+
+#: functions.php:85
 msgid "2 Columns: Sidebar / Content"
 msgstr ""
 
-#: functions.php:100
+#: functions.php:101
 msgid "Sidebar"
 msgstr ""
 
-#: functions.php:110 inc/customizer-options.php:219
+#: functions.php:111 inc/customizer-options.php:219
 msgid "Footer"
 msgstr ""
 

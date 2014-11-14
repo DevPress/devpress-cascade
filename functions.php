@@ -50,6 +50,7 @@ function cascade_setup() {
 	register_nav_menus( array(
 		'primary' => __( 'Primary Menu', 'cascade' ),
 		'secondary' => __( 'Secondary Menu', 'cascade' ),
+		'footer' => __( 'Footer Menu', 'cascade' )
 	) );
 
 	/*
