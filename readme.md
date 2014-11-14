@@ -26,43 +26,21 @@ This theme can be installed under "Appearance" > "Themes".  Click on the "Add Ne
 0.1.4 (06.17.14)
 ===
 
-* New theme updater
+* Update: New theme updater
 
 0.1.3 (10.01.12)
 ===
 
-ADDED:
-
-* functions/admin.php
-* js/cascade-admin.js
-
-EDITED:
-
-* languages/(all files)
-* library/(all files and sub-directories)
-* footer.php
-* functions.php
-* header.php
-* home.php // Loads the featured slider on home page only, not on paginated pages.
-* screenshot.png
-* style.css
-
-REMOVED:
-
-* admin/
-* admin/functions-admin.php
+Update: Improved admin panel
+Update: Load featured slider only on home
 
 0.1.1 (06.19.12)
 ===
 
-* Adjusted responsive menus
-* js/cascade.js
-* library/ (entire directory)
-* functions.php
-* style.css
+* Update: Better responsive menus
+* Update: Update Hybrid Core
 
 0.1.0 (05.23.12)
 ===
 
-* Added responsive CSS for screen sizes 320 and under
-* style.css
+* Enhancement: CSS for screen sizes 320 and under
