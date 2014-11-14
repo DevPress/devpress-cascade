@@ -1235,11 +1235,6 @@ a:active {
   height: 38px;
 }
 
-.error404.layout-sidebar-right .site-main,
-.error404.layout-sidebar-left .site-main {
-  margin: 0;
-}
-
 /* Widgets
 --------------------------------------------------------------*/
 .secondary .widget {
