@@ -18,7 +18,7 @@ $updater = new EDD_Theme_Updater_Admin(
 		'remote_api_url' => 'https://devpress.com',
 		'item_name' => 'Cascade',
 		'theme_slug' => 'cascade',
-		'version' => '0.3.0',
+		'version' => CASCADE_VERSION,
 		'author' => 'DevPress',
 	),
 
@@ -48,3 +48,64 @@ $updater = new EDD_Theme_Updater_Admin(
 	)
 
 );
+
+/**
+ * Version check to kick off upgrade routine
+ */
+function cascade_version_check() {
+	if ( CASCADE_VERSION != get_theme_mod( 'version', false ) ) {
+		cascade_update_routine();
+	}
+}
+
+/**
+ * Upgrade routine
+ */
+function cascade_update_routine() {
+
+	$v = get_theme_mod( 'version', false );
+
+	// Upgrade from < v0.2.1 to v0.3.0+
+	if ( ( false === $v ) && ( false !== get_option( 'cascade_theme_settings', false ) ) ) {
+
+		$options = get_option( 'cascade_theme_settings' );
+
+		// Update logo
+		if ( isset( $options['cascade_logo_url'] ) ) {
+			set_theme_mod( 'logo', esc_url( $options['cascade_logo_url'] ) );
+		}
+
+		// Update footer text
+		if ( isset( $options['footer_insert'] ) ) {
+			set_theme_mod( 'footer-text', esc_textarea( $options['footer_insert'] ) );
+		}
+
+		// Update layout
+		if ( isset( $options['cascade_global_layout'] ) ) {
+
+			$option = $options['cascade_global_layout'];
+
+			// Default to sidebar right
+			$layout = 'sidebar-right';
+
+			// Single Column
+			if ( 'layout_1c' == $option || 'layout_hl_1c' == $option || 'layout_hr_1c' == $option ) {
+				$layout = 'single-column';
+			}
+
+			// Sidebar Right
+			if ( 'layout_2c_l' == $option || 'layout_3c_l' == $option ) {
+				$layout = 'sidebar-right';
+			}
+
+			// Sidebar Left
+			if ( 'layout_2c_r' == $option || 'layout_3c_r' == $option ) {
+				$layout = 'sidebar-left';
+			}
+
+			set_theme_mod( 'theme_layout', $layout );
+		}
+	}
+
+	// set_theme_mod( 'version', CASCADE_VERSION );
+}

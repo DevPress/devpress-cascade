@@ -246,5 +246,6 @@ require get_template_directory() . '/inc/theme-layouts.php';
 // Theme Updater
 function cascade_theme_updater() {
 	require( get_template_directory() . '/inc/updater/theme-updater.php' );
+	cascade_version_check();
 }
 add_action( 'after_setup_theme', 'cascade_theme_updater' );
