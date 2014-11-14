@@ -1,71 +1,75 @@
 <?php
 /**
- * Comments Template
+ * The template for displaying Comments.
  *
- * Lists comments and calls the comment form.  Individual comments have their own templates.  The 
- * hierarchy for these templates is $comment_type.php, comment.php.
+ * The area of the page that contains both current comments
+ * and the comment form.
  *
  * @package Cascade
- * @subpackage Functions
- * @version 0.1.3
- * @author Justin Tadlock
- * @author Tung Do <tung@devpress.com>
  */
 
-/* Kill the page if trying to access this template directly. */
-if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) )
-	die( __( 'Please do not load this page directly. Thanks!', 'cascade' ) );
-
-/* If a post password is required or no comments are given and comments/pings are closed, return. */
-if ( post_password_required() || ( !have_comments() && !comments_open() && !pings_open() ) )
+/*
+ * If the current post is protected by a password and
+ * the visitor has not yet entered the password we will
+ * return early without loading the comments.
+ */
+if ( post_password_required() ) {
 	return;
+}
 ?>
 
-<div id="comments-template">
+<div id="comments" class="comments-area">
 
-	<div class="comments-wrap">
+	<?php // You can start editing here -- including this comment! ?>
 
-		<div id="comments">
+	<?php if ( have_comments() ) : ?>
+		<h3 class="comments-title">
+			<?php
+				printf( _nx( '1 Response', '%1$s Responses', get_comments_number(), 'comments title', 'cascade' ),
+					number_format_i18n( get_comments_number() ) );
+			?>
+		</h3>
 
-			<?php if ( have_comments() ) : ?>
+		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
+		<nav id="comment-nav-above" class="comment-navigation" role="navigation">
+			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'cascade' ); ?></h1>
+			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'cascade' ) ); ?></div>
+			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'cascade' ) ); ?></div>
+		</nav><!-- #comment-nav-above -->
+		<?php endif; // check for comment navigation ?>
 
-				<h3 id="comments-number" class="comments-header"><?php comments_number( __( 'No Comments', 'cascade' ), __( 'One Comment', 'cascade' ), __( '% Comments', 'cascade' ) ); ?></h3>
+		<ol class="comment-list">
+			<?php
+				wp_list_comments( array(
+					'style' => 'ol',
+					'short_ping' => true,
+					'avatar_size' => 50,
+					'callback' => 'cascade_comment_callback',
+					'short_ping' => true,
+				) );
+			?>
+		</ol><!-- .comment-list -->
 
-				<?php do_atomic( 'before_comment_list' );// cascade_before_comment_list ?>
-				
-				<?php if ( get_option( 'page_comments' ) ) : ?>
-					<div class="comment-navigation comment-pagination">
-						<span class="page-numbers"><?php printf( __( 'Page %1$s of %2$s', 'cascade' ), ( get_query_var( 'cpage' ) ? absint( get_query_var( 'cpage' ) ) : 1 ), get_comment_pages_count() ); ?></span>
-						<?php paginate_comments_links(); ?>
-					</div><!-- .comment-navigation -->
-				<?php endif; ?>
+		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
+		<nav id="comment-nav-below" class="comment-navigation" role="navigation">
+			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'cascade' ); ?></h1>
+			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'cascade' ) ); ?></div>
+			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'cascade' ) ); ?></div>
+		</nav><!-- #comment-nav-below -->
+		<?php endif; // check for comment navigation ?>
 
-				<ol class="comment-list">
-					<?php wp_list_comments( hybrid_list_comments_args() ); ?>
-				</ol><!-- .comment-list -->
+	<?php endif; // have_comments() ?>
 
-				<?php do_atomic( 'after_comment_list' ); // cascade_after_comment_list ?>
-				
-			<?php endif; ?>
+	<?php
+		// If comments are closed and there are comments, let's leave a little note, shall we?
+		if ( ! comments_open() && '0' != get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
+	?>
+		<p class="no-comments"><?php _e( 'Comments are closed.', 'cascade' ); ?></p>
+	<?php endif; ?>
 
-			<?php if ( pings_open() && !comments_open() ) : ?>
+	<?php comment_form( array(
+			'comment_notes_before' => ''
+		)
+	); ?>
 
-				<p class="comments-closed pings-open">
-					<?php printf( __( 'Comments are closed, but <a href="%1$s" title="Trackback URL for this post">trackbacks</a> and pingbacks are open.', 'cascade' ), get_trackback_url() ); ?>
-				</p><!-- .comments-closed .pings-open -->
-
-			<?php elseif ( !comments_open() ) : ?>
-
-				<p class="comments-closed">
-					<?php _e( 'Comments are closed.', 'cascade' ); ?>
-				</p><!-- .comments-closed -->
-
-			<?php endif; ?>
-
-		</div><!-- #comments -->
-
-		<?php comment_form( array( 'title_reply' => __( 'Post Comment', 'cascade' ) ) ); // Loads the comment form. ?>
-
-	</div><!-- .comments-wrap -->
-
-</div><!-- #comments-template -->
+</div><!-- #comments -->

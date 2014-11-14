@@ -1,20 +1,17 @@
 <?php
 /**
- * Search Form Template
- *
- * The search form template displays the search form.
+ * Search form template
  *
  * @package Cascade
- * @subpackage Functions
- * @version 0.1.3
- * @author Justin Tadlock
- * @author Tung Do <tung@devpress.com>
  */
 ?>
 
-<form method="get" class="search-form" action="<?php echo trailingslashit( home_url() ); ?>">
-	<div>
-		<input class="search-text" type="text" name="s" value="<?php if ( is_search() ) echo esc_attr( get_search_query() ); else esc_attr_e( 'Search this site...', 'cascade' ); ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" />
-		<input class="search-submit button" name="submit" type="submit" value="<?php esc_attr_e( 'Search', 'cascade' ); ?>" />
-	</div>
-</form><!-- .search-form -->
+<form role="search" method="get" class="search-form clearfix" action="<?php echo home_url( '/' ); ?>">
+	<label>
+		<span class="screen-reader-text"><?php _e( 'Search for:', 'cascade' ); ?></span>
+		<input type="search" class="search-field" placeholder="<?php _e( 'Search...', 'cascade' ); ?>" value="" name="s" title="<?php _e( 'Search for:', 'cascade' ); ?>" />
+	</label>
+	<button type="submit" class="search-submit">
+		<div class="cascade-icon-search"></div><span class="screen-reader-text"><?php _e( 'Search...', 'cascade' ); ?></span>
+	</button>
+</form>

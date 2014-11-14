@@ -5,432 +5,246 @@
  * @package Cascade
  */
 
-/* Load the Hybrid Core framework. */
-require_once( trailingslashit ( get_template_directory() ) . 'library/hybrid.php' );
-$theme = new Hybrid(); // Part of the framework.
-
-/* Do theme setup on the 'after_setup_theme' hook. */
-add_action( 'after_setup_theme', 'cascade_theme_setup' );
-
+/**
+ * The current version of the theme.
+ */
+define( 'CASCADE_VERSION', '0.3.0' );
 
 /**
- * Theme setup function.  This function adds support for theme features and defines the default theme
- * actions and filters.
- *
- * @since 0.1.0
+ * Set the content width based on the theme's design and stylesheet.
  */
-function cascade_theme_setup() {
+if ( ! isset( $content_width ) ) {
+	$content_width = 840; /* pixels */
+}
 
-	/* Get action/filter hook prefix. */
-	$prefix = hybrid_get_prefix(); // Part of the framework, cannot be changed or prefixed.
+if ( ! function_exists( 'cascade_setup' ) ) :
+/**
+ * Sets up theme defaults and registers support for various WordPress features.
+ *
+ * Note that this function is hooked into the after_setup_theme hook, which
+ * runs before the init hook. The init hook is too late for some features, such
+ * as indicating support for post thumbnails.
+ */
+function cascade_setup() {
 
-	/* Add theme settings */
-	if ( is_admin() ) {
-	    locate_template( 'functions/admin.php', true );
-	}
+	/*
+	 * Make theme available for translation.
+	 * Translations can be filed in the /languages/ directory.
+	 * If you're building a theme based on Cascade, use a find and replace
+	 * to change 'cascade' to the name of your theme in all the template files
+	 */
+	load_theme_textdomain( 'cascade', get_template_directory() . '/languages' );
 
-	/* Register support for all post formats. */
-	add_theme_support( 'post-formats', array(
-		'aside',
-		'audio',
-		'chat',
-		'gallery',
-		'image',
-		'link',
-		'quote',
-		'status',
-		'video'
-	) );
-
-	/* Add framework menus. */
-	add_theme_support( 'hybrid-core-menus', array( // Add core menus.
-		'primary',
-		'secondary'
-	) );
-
-	/* Register aditional menus */
-	add_action( 'init', 'cascade_register_menus' );
-
-	/* Add framework sidebars */
-	add_theme_support( 'hybrid-core-sidebars', array( // Add sidebars or widget areas.
-		'primary',
-		'secondary',
-		'subsidiary',
-		'header',
-		'before-content',
-		'after-content',
-		'after-singular'
-	) );
-
-	/* Register additional widget areas. */
-	add_action( 'widgets_init', 'cascade_register_sidebars', 11 );
-
-	add_theme_support( 'hybrid-core-widgets' );
-	add_theme_support( 'hybrid-core-shortcodes' );
-	add_theme_support( 'hybrid-core-template-hierarchy' ); // This is important. Do not remove. */
-
-	/* Add aditional layouts */
-	add_filter( 'theme_layouts_strings', 'cascade_theme_layouts' );
-
-	/* Add theme support for framework layout extension. */
-	add_theme_support( 'theme-layouts', array( // Add theme layout options.
-		'1c',
-		'2c-l',
-		'2c-r',
-		'3c-c',
-		'3c-l',
-		'3c-r',
-		'hl-1c',
-		'hl-2c-l',
-		'hl-2c-r',
-		'hr-1c',
-		'hr-2c-l',
-		'hr-2c-r'
-	) );
-
-	/* Add theme support for other framework extensions */
-	add_theme_support( 'post-stylesheets' );
-	add_theme_support( 'loop-pagination' );
-	add_theme_support( 'get-the-image' );
-	add_theme_support( 'breadcrumb-trail' );
-	add_theme_support( 'cleaner-gallery' );
-	add_theme_support( 'hybrid-core-theme-settings', array( 'footer' ) );
-
-	/* Add theme support for WordPress features. */
+	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
 
-	/* Load resources into the theme. */
-	add_action( 'wp_enqueue_scripts', 'cascade_resources' );
+	/*
+	 * Enable support for Post Thumbnails on posts and pages.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
+	 */
+	add_theme_support( 'post-thumbnails' );
+	set_post_thumbnail_size( 874, 9999 );
 
-	/* Load theme fonts */
-	add_action( 'wp_enqueue_scripts', 'cascade_fonts' );
+	// Registers menu above the site title
+	register_nav_menus( array(
+		'primary' => __( 'Primary Menu', 'cascade' ),
+		'secondary' => __( 'Secondary Menu', 'cascade' ),
+	) );
 
-	/* Add theme support for WordPress background feature */
-	add_theme_support( 'custom-background', array(
-		'wp-head-callback' => 'cascade_custom_background_callback'
-	));
+	/*
+	 * Switch default core markup for search form, comment form, and comments
+	 * to output valid HTML5.
+	 */
+	add_theme_support( 'html5', array(
+		'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+	) );
 
-	/* Modify excerpt more */
-	add_filter('excerpt_more', 'cascade_new_excerpt_more');
+	/*
+	 * Enable support for Post Formats.
+	 * See http://codex.wordpress.org/Post_Formats
+	 */
+	add_theme_support( 'post-formats', array(
+		'image', 'gallery', 'video', 'quote', 'link'
+	) );
 
-	/* Wraps <blockquote> around quote posts. */
-	add_filter( 'the_content', 'cascade_quote_post_content' );
+	// Setup the WordPress core custom background feature.
+	add_theme_support( 'custom-background', apply_filters( 'cascade_custom_background_args', array(
+		'default-color' => 'f7f7f7',
+		'default-image' => '',
+	) ) );
 
-	/* Set content width. */
-	hybrid_set_content_width( 920 );
-
-	/* Embed width/height defaults. */
-	add_filter( 'embed_defaults', 'cascade_embed_defaults' ); // Set default widths to use when inserting media files
-
-	/* Assign specific layouts to pages based on set conditions and disable certain sidebars based on layout choices. */
-	add_action( 'template_redirect', 'cascade_layouts' );
-	add_filter( 'sidebars_widgets', 'cascade_disable_sidebars' );
-
+	// Theme layouts
+	add_theme_support(
+		'theme-layouts',
+		array(
+			'single-column' => __( '1 Column Wide', 'cascade' ),
+			'single-column-narrow' => __( '1 Column Narrow', 'cascade' ),
+			'sidebar-right' => __( '2 Columns: Content / Sidebar', 'cascade' ),
+			'sidebar-left' => __( '2 Columns: Sidebar / Content', 'cascade' )
+		),
+		array( 'default' => is_rtl() ? 'sidebar-right' :'sidebar-left' )
+	);
 }
-
+endif; // cascade_setup
+add_action( 'after_setup_theme', 'cascade_setup' );
 
 /**
- * Loads the theme scripts.
+ * Register widget area.
  *
- * @since 0.1
+ * @link http://codex.wordpress.org/Function_Reference/register_sidebar
  */
-function cascade_resources() {
+function cascade_widgets_init() {
 
-	wp_enqueue_script ( 'cascade-scripts', trailingslashit ( get_template_directory_uri() ) . 'js/cascade.js', array( 'jquery' ), '201200215', true );
+	register_sidebar( array(
+		'name'          => __( 'Sidebar', 'cascade' ),
+		'id'            => 'primary',
+		'description'   => '',
+		'before_widget' => '<aside id="%1$s" class="widget module %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+
+	register_sidebar( array(
+		'name'          => __( 'Footer', 'cascade' ),
+		'id'            => 'footer',
+		'description'   => '',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+
 
 }
+add_action( 'widgets_init', 'cascade_widgets_init' );
 
 /**
- * Loads theme fonts
- *
- * @since 0.2.0
+ * Enqueue fonts.
  */
 function cascade_fonts() {
 
-	$font_uri = '//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700|Oswald:400,300';
-	wp_enqueue_style( 'cascade-fonts', $font_uri, array(), null, 'screen' );
+	// Font options
+	$fonts = array();
+
+	// Site title font only required when logo not in use
+	if ( ! get_theme_mod( 'logo', 0 ) ) :
+		$fonts[0] = get_theme_mod( 'site-title-font', customizer_library_get_default( 'site-title-font' ) );
+	endif;
+
+	$fonts[1] = get_theme_mod( 'primary-font', customizer_library_get_default( 'primary-font' ) );
+	$fonts[2] = get_theme_mod( 'secondary-font', customizer_library_get_default( 'secondary-font' ) );
+
+	$font_uri = customizer_library_get_google_font_uri( $fonts );
+
+	// Load Google Fonts
+	wp_enqueue_style( 'cascade-body-fonts', $font_uri, array(), null, 'screen' );
+
+	// Icon Font
+	wp_enqueue_style( 'cascade-icons', get_template_directory_uri() . '/fonts/cascade-icons.css', array(), '0.1.0' );
 
 }
+add_action( 'wp_enqueue_scripts', 'cascade_fonts' );
 
 /**
- * This is a fix for when a user sets a custom background color with no custom background image.  What
- * happens is the theme's background image hides the user-selected background color.  If a user selects a
- * background image, we'll just use the WordPress custom background callback.
- *
- * @since 0.1
- * @author Justin Tadlock
- * @link http://core.trac.wordpress.org/ticket/16919
+ * Enqueue scripts and styles.
  */
-function cascade_custom_background_callback() {
+function cascade_scripts() {
 
-	/* Get the background image. */
-	$image = get_background_image();
+	wp_enqueue_style(
+		'cascade-style',
+		get_stylesheet_uri(),
+		array(),
+		CASCADE_VERSION
+	);
 
-	/* If there's an image, just call the normal WordPress callback. We won't do anything here. */
-	if ( !empty( $image ) ) {
-		_custom_background_cb();
-		return;
+	// Use style-rtl.css for RTL layouts
+	wp_style_add_data(
+		'cascade-style',
+		'rtl',
+		'replace'
+	);
+
+	if ( SCRIPT_DEBUG || WP_DEBUG ) :
+
+		wp_enqueue_script(
+			'cascade-skip-link-focus-fix',
+			get_template_directory_uri() . '/js/skip-link-focus-fix.js',
+			array(),
+			CASCADE_VERSION,
+			true
+		);
+
+		wp_enqueue_script(
+			'cascade-fitvids',
+			get_template_directory_uri() . '/js/jquery.fitvids.js',
+			array( 'jquery' ),
+			CASCADE_VERSION,
+			true
+		);
+
+		wp_enqueue_script(
+			'cascade-global',
+			get_template_directory_uri() . '/js/global.js',
+			array( 'jquery', 'cascade-fitvids' ),
+			CASCADE_VERSION,
+			true
+		);
+
+	else :
+
+		wp_enqueue_script(
+			'cascade-scripts',
+			get_template_directory_uri() . '/js/cascade.min.js',
+			array( 'jquery' ),
+			CASCADE_VERSION,
+			true
+		);
+
+	endif;
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
 	}
-
-	/* Get the background color. */
-	$color = get_background_color();
-
-	/* If no background color, return. */
-	if ( empty( $color ) )
-		return;
-
-	/* Use 'background' instead of 'background-color'. */
-	$style = "background: #{$color};";
-
-?>
-<style type="text/css">body.custom-background { <?php echo trim( $style ); ?> }</style>
-<?php
-
 }
+add_action( 'wp_enqueue_scripts', 'cascade_scripts' );
 
 /**
- * Filters the excerpt more.
- *
- * @since 0.1
+ * Load placeholder polyfill for IE9 and older
  */
-
-function cascade_new_excerpt_more( $more ) {
-	return '&#133;';
+function cascade_placeholder_polyfill() {
+    echo '<!--[if lte IE 9]><script src="' . get_template_directory_uri() . '/js/jquery-placeholder.js"></script><![endif]-->'. "\n";
 }
+add_action( 'wp_head', 'cascade_placeholder_polyfill' );
 
-/**
- * Wraps the output of posts with the 'quote' post format with a <blockquote> element if the post content
- * doesn't already have this element within it.
- *
- * @since 0.1
- * @access private
- * @param string $content The content of the post.
- * @return string $content
- */
-function cascade_quote_post_content( $content ) {
 
-	if ( has_post_format( 'quote' ) ) {
-		preg_match( '/<blockquote.*?>/', $content, $matches );
+// Custom template tags for this theme.
+require get_template_directory() . '/inc/template-tags.php';
 
-		if ( empty( $matches ) ) {
-			$content = "<blockquote>{$content}</blockquote>";
-		}
-	}
+// Custom functions that act independently of the theme templates.
+require get_template_directory() . '/inc/extras.php';
 
-	return $content;
+// Helper library for the theme customizer.
+require get_template_directory() . '/inc/customizer-library/customizer-library.php';
+
+// Define options for the theme customizer.
+require get_template_directory() . '/inc/customizer-options.php';
+
+// Output inline styles based on theme customizer selections.
+require get_template_directory() . '/inc/styles.php';
+
+// Additional filters and actions based on theme customizer selections.
+require get_template_directory() . '/inc/mods.php';
+
+// Loop pagination
+require get_template_directory() . '/inc/loop-pagination.php';
+
+// Theme Layouts
+require get_template_directory() . '/inc/theme-layouts.php';
+
+// Theme Updater
+function cascade_theme_updater() {
+	require( get_template_directory() . '/inc/updater/theme-updater.php' );
 }
-
-/**
- * Overwrites the default widths for embeds.  This is especially useful for making sure videos properly
- * expand the full width on video pages.  This function overwrites what the $content_width variable handles
- * with context-based widths.
- *
- * @since 0.1
- */
-function cascade_embed_defaults( $args ) {
-
-	$args['width'] = 920;
-
-	if ( current_theme_supports( 'theme-layouts' ) ) {
-
-		$layout = theme_layouts_get_layout();
-
-		if ( 'layout-3c-l' == $layout || 'layout-3c-r' == $layout || 'layout-3c-c' == $layout || 'layout-hl-2c-l' == $layout || 'layout-hl-2c-r' == $layout || 'layout-hr-2c-l' == $layout || 'layout-hr-2c-r' == $layout )
-
-			$args['width'] = 280;
-
-		elseif ( 'layout-2c-l' == $layout || 'layout-2c-r' == $layout )
-
-			$args['width'] = 600;
-
-	}
-
-	return $args;
-}
-
-/**
- * Conditional logic deciding the layout of certain pages.
- *
- * @since 0.1.0
- */
-function cascade_layouts() {
-
-	if ( current_theme_supports( 'theme-layouts' ) ) {
-
-		$layout = theme_layouts_get_layout();
-		$global_layout = hybrid_get_setting( 'cascade_global_layout' );
-
-		if ( !is_singular() && $global_layout !== 'layout_default' && function_exists( "cascade_{$global_layout}" ) ) {
-			add_filter( 'get_theme_layout', 'cascade_' . $global_layout );
-		}
-
-		if ( is_singular() && $layout == 'layout-default' && $global_layout !== 'layout_default' && function_exists( "cascade_{$global_layout}" ) ) {
-			add_filter( 'get_theme_layout', 'cascade_' . $global_layout );
-		}
-
-	}
-
-}
-
-/**
- * Filters 'theme_layouts_strings'.
- *
- * @since 0.1.0
- */
-function cascade_theme_layouts( $strings ) {
-
-	/* Set up the layout strings. */
-	$strings = array(
-		'default' => __( 'Default', 'theme-layouts' ),
-		'1c' => __( 'One Column', 'theme-layouts' ),
-		'2c-l' => __( 'Two Columns, Left', 'theme-layouts' ),
-		'2c-r' => __( 'Two Columns, Right', 'theme-layouts' ),
-		'3c-c' => __( 'Three Columns, Center', 'theme-layouts' ),
-		'3c-l' => __( 'Three Columns, Left', 'theme-layouts' ),
-		'3c-r' => __( 'Three Columns, Right', 'theme-layouts' ),
-		'hl-1c' => __( 'Header Left One Column', 'theme-layouts' ),
-		'hl-2c-l' => __( 'Header Left Two Columns, Left', 'theme-layouts' ),
-		'hl-2c-r' => __( 'Header Left Two Columns, Right', 'theme-layouts' ),
-		'hr-1c' => __( 'Header Right One Column', 'theme-layouts' ),
-		'hr-2c-l' => __( 'Header Right Two Columns, Left', 'theme-layouts' ),
-		'hr-2c-r' => __( 'Header Right Two Columns, Right', 'theme-layouts' )
-	);
-
-	return $strings;
-}
-
-/**
- * Filters 'get_theme_layout'.
- *
- * @since 0.1.0
- */
-function cascade_layout_default( $layout ) {return 'layout-default';}
-function cascade_layout_1c( $layout ) {return 'layout-1c';}
-function cascade_layout_2c_l( $layout ) {return 'layout-2c-l';}
-function cascade_layout_2c_r( $layout ) {return 'layout-2c-r';}
-function cascade_layout_3c_c( $layout ) {return 'layout-3c-c';}
-function cascade_layout_3c_l( $layout ) {return 'layout-3c-l';}
-function cascade_layout_3c_r( $layout ) {return 'layout-3c-r';}
-function cascade_layout_hl_1c( $layout ) {return 'layout-hl-1c';}
-function cascade_layout_hl_2c_l( $layout ) {return 'layout-hl-2c-l';}
-function cascade_layout_hl_2c_r( $layout ) {return 'layout-hl-2c-r';}
-function cascade_layout_hr_1c( $layout ) {return 'layout-hr-1c';}
-function cascade_layout_hr_2c_l( $layout ) {return 'layout-hr-2c-l';}
-function cascade_layout_hr_2c_r( $layout ) {return 'layout-hr-2c-r';}
-
-/**
- * Disables sidebars based on layout choices.
- *
- * @since 0.1.0
- */
-function cascade_disable_sidebars( $sidebars_widgets ) {
-	global $wp_query;
-
-	if ( current_theme_supports( 'theme-layouts' ) && !is_admin() ) {
-
-		if ( 'layout-default' == theme_layouts_get_layout() || 'layout-1c' == theme_layouts_get_layout() ) {
-			$sidebars_widgets['primary'] = false;
-			$sidebars_widgets['secondary'] = false;
-
-		}
-		if ( 'layout-default' == theme_layouts_get_layout() || 'layout-1c' == theme_layouts_get_layout() || 'layout-2c-l' == theme_layouts_get_layout() || 'layout-2c-r' == theme_layouts_get_layout() || 'layout-3c-c' == theme_layouts_get_layout() || 'layout-3c-l' == theme_layouts_get_layout() || 'layout-3c-r' == theme_layouts_get_layout() ) {
-			$sidebars_widgets['header'] = false;
-		}
-		if ( 'layout-hl-1c' == theme_layouts_get_layout() || 'layout-hr-1c' == theme_layouts_get_layout() ) {
-			$sidebars_widgets['primary'] = false;
-			$sidebars_widgets['secondary'] = false;
-		}
-
-	}
-
-	return $sidebars_widgets;
-}
-
-/**
- * Registers additional menus.
- *
- * @since 0.1.0
- * @uses register_nav_menu() Registers a nav menu with WordPress.
- * @link http://codex.wordpress.org/Function_Reference/register_nav_menu
- */
-function cascade_register_menus() {
-
-	register_nav_menu( 'header-primary', _x( 'Header Primary', 'nav menu location', 'cascade' ) );
-	register_nav_menu( 'footer', _x( 'Footer', 'nav menu location', 'cascade' ) );
-
-}
-
-/**
- * Register additional sidebars.
- *
- * @since 0.1.0
- */
-function cascade_register_sidebars() {
-
-	$subsidiary_2 = array(
-		'id' => 'subsidiary-2c',
-		'name' => _x( 'Subsidiary 2 Columns', 'sidebar', 'cascade' ),
-		'description' => __( 'A 2-column widget area loaded before the footer of the site.', 'cascade' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
-		'after_widget' => '</div></div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>'
-	);
-
-	$subsidiary_3 = array(
-		'id' => 'subsidiary-3c',
-		'name' => _x( 'Subsidiary 3 Columns', 'sidebar', 'cascade' ),
-		'description' => __( 'A 3-column widget area loaded before the footer of the site.', 'cascade' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
-		'after_widget' => '</div></div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>'
-	);
-
-	$subsidiary_4 = array(
-		'id' => 'subsidiary-4c',
-		'name' => _x( 'Subsidiary 4 Columns', 'sidebar', 'cascade' ),
-		'description' => __( 'A 4-column widget area loaded before the footer of the site.', 'cascade' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
-		'after_widget' => '</div></div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>'
-	);
-
-	$subsidiary_5 = array(
-		'id' => 'subsidiary-5c',
-		'name' => _x( 'Subsidiary 5 Columns', 'sidebar', 'cascade' ),
-		'description' => __( 'A 5-column widget area loaded before the footer of the site.', 'cascade' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
-		'after_widget' => '</div></div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>'
-	);
-
-	$entry = array(
-		'id' => 'entry',
-		'name' => _x( 'Entry', 'sidebar', 'cascade' ),
-		'description' => __( 'Loaded directly before the entry content texts.', 'cascade' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
-		'after_widget' => '</div></div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>'
-	);
-
-	register_sidebar( $subsidiary_2 );
-	register_sidebar( $subsidiary_3 );
-	register_sidebar( $subsidiary_4 );
-	register_sidebar( $subsidiary_5 );
-	register_sidebar( $entry );
-
-}
-
-/**
- * Theme updater.
- *
- * @since 0.1.4
- */
-function devpress_theme_updater() {
-	require( get_template_directory() . '/library/updater/theme-updater.php' );
-}
-add_action( 'after_setup_theme', 'devpress_theme_updater' );
+add_action( 'after_setup_theme', 'cascade_theme_updater' );

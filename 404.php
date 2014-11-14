@@ -1,54 +1,30 @@
 <?php
 /**
- * 404 Template
- *
- * The 404 template is used when a reader visits an invalid URL on your site. By default, the template will 
- * display a generic message.
+ * The template for displaying 404 pages (Not Found).
  *
  * @package Cascade
- * @subpackage Functions
- * @version 0.1.3
- * @author Tung Do <tung@devpress.com>
- * @copyright Copyright (c) 2012, Tung Do
- * @link http://devpress.com/themes/cascade
- * @link http://codex.wordpress.org/Creating_an_Error_404_Page
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
-@header( 'HTTP/1.1 404 Not found', true, 404 );
+get_header(); ?>
 
-get_header(); // Loads the header.php template. ?>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 
-	<?php do_atomic( 'before_content' ); // cascade_before_content ?>
+			<div id="error-404" class="module">
 
-	<div id="content">
+					<header class="entry-header">
+						<h1 class="entry-title"><?php _e( '404 — Page Not Found', 'cascade' ); ?></h1>
+					</header><!-- .entry-header -->
 
-		<?php do_atomic( 'open_content' ); // cascade_open_content ?>
+					<div class="entry-content">
+						<p><?php _e( 'The page you are looking for doesn\'t exist. Try a search?', 'cascade' ); ?></p>
 
-		<div class="hfeed">
+						<?php get_search_form(); ?>
 
-			<div id="post-0" class="<?php hybrid_entry_class(); ?>">
+					</div><!-- .entry-content -->
+			</div>
 
-				<h1 class="error-404-title entry-title"><?php _e( 'Not Found', 'cascade' ); ?></h1>
+		</main><!-- #main -->
+	</div><!-- #primary -->
 
-				<div class="entry-content">
-
-					<p>
-					<?php printf( __( 'You tried going to %1$s, and it doesn\'t exist. All is not lost! You can search for what you\'re looking for.', 'cascade' ), '<code>' . home_url( esc_url( $_SERVER['REQUEST_URI'] ) ) . '</code>' ); ?>
-					</p>
-
-					<?php get_search_form(); // Loads the searchform.php template. ?>
-
-				</div><!-- .entry-content -->
-
-			</div><!-- .hentry -->
-
-		</div><!-- .hfeed -->
-
-		<?php do_atomic( 'close_content' ); // cascade_close_content ?>
-
-	</div><!-- #content -->
-
-	<?php do_atomic( 'after_content' ); // cascade_after_content ?>
-
-<?php get_footer(); // Loads the footer.php template. ?>
+<?php get_footer(); ?>

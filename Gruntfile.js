@@ -6,16 +6,77 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		watch: {
+			files: ['scss/*.scss'],
+			tasks: 'sass',
+			options: {
+				livereload: true,
+			},
+		},
+		sass: {
+			default: {
+		  		options : {
+			  		style : 'expanded'
+			  	},
+			  	files: {
+					'style.css':'scss/style.scss',
+				}
+			}
+		},
+	    autoprefixer: {
+            options: {
+				browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1', 'ie 9']
+			},
+			single_file: {
+				src: 'style.css',
+				dest: 'style.css'
+			}
+		},
+		csscomb: {
+			options: {
+                config: '.csscomb.json'
+            },
+            files: {
+                'style.css': ['style.css'],
+            }
+		},
+		concat: {
+		    build: {
+		        src: [
+		            'js/skip-link-focus-fix.js',
+		            'js/jquery.fittext.js',
+		            'js/jquery.fitvids.js',
+		            'js/global.js'
+		        ],
+		        dest: 'js/cascade.min.js',
+		    }
+		},
+		uglify: {
+		    build: {
+		        src: 'js/cascade.min.js',
+		        dest: 'js/cascade.min.js'
+		    }
+		},
+	    // https://www.npmjs.org/package/grunt-wp-i18n
 	    makepot: {
 	        target: {
 	            options: {
-	                domainPath: '/languages/',    // Where to save the POT file.
-	                potFilename: 'cascade.pot',   // Name of the POT file.
-	                type: 'wp-theme',  // Type of project (wp-plugin or wp-theme).
-	                updateTimestamp: false
-	            }
-	        }
-	    },
+	                domainPath: '/languages/',
+	                potFilename: 'cascade.pot',
+	                potHeaders: {
+	                poedit: true, // Includes common Poedit headers.
+                    'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
+                },
+		        type: 'wp-theme',
+		        updateTimestamp: false,
+		        processPot: function( pot, options ) {
+					pot.headers['report-msgid-bugs-to'] = 'https://devpress.com/';
+		        	pot.headers['language'] = 'en_US';
+		        	return pot;
+					}
+				}
+			}
+		},
 		exec: {
 			txpull: { // Pull Transifex translation - grunt exec:txpull
 				cmd: 'tx pull -a --minimum-perc=90' // Percentage translated
@@ -42,7 +103,58 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+		cssjanus: {
+			theme: {
+				options: {
+					swapLtrRtlInUrl: false
+				},
+				files: [
+					{
+						src: 'style.css',
+						dest: 'style-rtl.css'
+					}
+				]
+			}
+		},
+	    replace: {
+			styleVersion: {
+				src: [
+					'scss/style.scss',
+				],
+				overwrite: true,
+				replacements: [{
+					from: /Version:.*$/m,
+					to: 'Version: <%= pkg.version %>'
+				}]
+			},
+			functionsVersion: {
+				src: [
+					'functions.php'
+				],
+				overwrite: true,
+				replacements: [ {
+					from: /^define\( 'CASCADE_VERSION'.*$/m,
+					to: 'define( \'CASCADE_VERSION\', \'<%= pkg.version %>\' );'
+				} ]
+			},
+		}
 	});
+
+	grunt.registerTask( 'default', [
+		'sass',
+		'autoprefixer',
+    ]);
+
+    grunt.registerTask( 'release', [
+    	'replace',
+    	'sass',
+    	'autoprefixer',
+    	'csscomb',
+    	'concat:build',
+		'uglify:build',
+		'makepot',
+		'cssjanus'
+	]);
 
 	// Makepot and push it on Transifex task(s).
     grunt.registerTask( 'txpush', [

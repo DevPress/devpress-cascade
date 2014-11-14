@@ -1,75 +1,73 @@
 <?php
 /**
- * Archive Template
+ * The template for displaying archive pages.
  *
- * The archive template is the default template used for archives pages without a more specific template.
- * 
+ * Learn more: http://codex.wordpress.org/Template_Hierarchy
+ *
  * @package Cascade
- * @subpackage Functions
- * @version 0.1.3
- * @author Tung Do <tung@devpress.com>
- * @copyright Copyright (c) 2012, Tung Do
- * @link http://devpress.com/themes/cascade
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
-get_header(); // Loads the header.php template. ?>
+get_header(); ?>
 
-<?php do_atomic( 'before_content' ); // cascade_before_content ?>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 
-<div id="content">
+			<?php if ( function_exists( 'breadcrumb_trail' ) ):
+				breadcrumb_trail();
+			endif; ?>
 
-	<?php do_atomic( 'open_content' ); // cascade_open_content ?>
-	
-	<div class="hfeed">
-	
-	<?php if ( current_theme_supports( 'breadcrumb-trail' ) ) breadcrumb_trail( array( 'separator' => '&raquo;' ) ); ?>
-	
-	<?php get_template_part( 'loop-meta' ); // Loads the loop-meta.php template. ?>
-	
-	<?php get_sidebar( 'before-content' ); // Loads the sidebar-before-content.php template. ?>
-		
-		<?php if ( have_posts() ) : ?>
+			<?php if ( is_category() || is_tag() || is_author() || is_day() || is_year() ) : ?>
+			<header class="page-header">
+				<h1 class="page-title">
+				<?php
+				if ( is_category() ) :
+					single_cat_title();
 
-			<?php while ( have_posts() ) : the_post(); ?>
-			
-			<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
-			
-				<?php do_atomic( 'before_entry' ); // cascade_before_entry ?>
-				
-				<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
+				elseif ( is_tag() ) :
+					single_tag_title();
 
-				<div class="entry-content">
-								
-					<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'cascade' ) ); ?>
-					<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'cascade' ), 'after' => '</p>' ) ); ?>
+				elseif ( is_author() ) :
+					printf( __( 'Author: %s', 'cascade' ), '<span class="vcard">' . get_the_author() . '</span>' );
 
-				</div><!-- .entry-content -->
-				
-				<?php echo apply_atomic_shortcode( 'entry_meta', '<div class="entry-meta">' . __( '[entry-published] [entry-author] [entry-permalink] [entry-comments-link] [entry-terms taxonomy="category" after=", "] [entry-terms taxonomy="post_tag"] [entry-edit-link]', 'cascade' ) . '</div>' ); ?>
-			
-				<?php do_atomic( 'after_entry' ); // cascade_after_entry ?>
-				
-			</div><!-- .hentry -->
-			
+				elseif ( is_day() ) :
+					printf( __( 'Day: %s', 'cascade' ), '<span>' . get_the_date() . '</span>' );
+
+				elseif ( is_month() ) :
+					printf( __( 'Month: %s', 'cascade' ), '<span>' . get_the_date( _x( 'F Y', 'monthly archives date format', 'cascade' ) ) . '</span>' );
+
+				elseif ( is_year() ) :
+					printf( __( 'Year: %s', 'cascade' ), '<span>' . get_the_date( _x( 'Y', 'yearly archives date format', 'cascade' ) ) . '</span>' );
+
+				else :
+					_e( 'Archives', 'cascade' );
+
+				endif;
+				?>
+				</h1>
+			</header><!-- .page-header -->
+			<?php endif; ?>
+
+			<?php if ( have_posts() ) : ?>
+
+				<div id="posts-wrap">
+				<?php /* Start the Loop */ ?>
+				<?php while ( have_posts() ) : the_post(); ?>
+
+					<?php get_template_part( 'content' ); ?>
+
 				<?php endwhile; ?>
+				</div>
+
+				<?php cascade_paging_nav(); ?>
 
 			<?php else : ?>
 
-				<?php get_template_part( 'loop-error' ); // Loads the loop-error.php template. ?>
+				<?php get_template_part( 'content', 'none' ); ?>
 
-		<?php endif; ?>
-		
-	<?php get_sidebar( 'after-content' ); // Loads the sidebar-after-content.php template. ?>
-		
-	</div><!-- .hfeed -->
-	
-	<?php do_atomic( 'close_content' ); // cascade_close_content ?>
-	
-	<?php get_template_part( 'loop-nav' ); // Loads the loop-nav.php template. ?>
+			<?php endif; ?>
 
-</div><!-- #content -->
+		</main><!-- #main -->
+	</div><!-- #primary -->
 
-<?php do_atomic( 'after_content' ); // cascade_after_content ?>
-
-<?php get_footer(); // Loads the header.php template. ?>
+<?php get_sidebar(); ?>
+<?php get_footer(); ?>

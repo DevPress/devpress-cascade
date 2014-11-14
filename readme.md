@@ -1,12 +1,30 @@
 # Cascade
 
-An advanced responsive theme with 4 menus, 12 layouts, per post/page layout option, custom post templates/stylesheets, built-in breadcrumbs, pagination, and 12 widget areas.
+Cascade is an elegant WordPress theme for displaying your content. Add your own logo, choose the perfect typography, and update header colors if you choose. Features two widget areas and multiple layout options. Works beautifully on small screens and mobile devices.
 
 ## Installation Instructions
 
 This theme can be installed under "Appearance" > "Themes".  Click on the "Add New" button to upload the theme zip file.
 
+## Developer Instructions
+
+### Grunt
+
+This theme uses Grunt to compile SASS and Javascript.  It also generates translation files, autoprefixes styles, and concats and minifies scripts.
+
+If you have Grunt installed, just run `npm install` in the theme directory to download dependencies.
+
+`grunt watch` can be used while editing SASS and JS.
+`grunt release` should be used before browser testing or releasing.
+
 ## Change Log
+
+Development
+===
+
+* Major Update: Complete rewrite of theme templates and styles
+* Enhancement: Additional font and styling options
+* Update: Removal of three-column layout options
 
 0.2.1 (11.12.14)
 ===
@@ -31,8 +49,8 @@ This theme can be installed under "Appearance" > "Themes".  Click on the "Add Ne
 0.1.3 (10.01.12)
 ===
 
-Update: Improved admin panel
-Update: Load featured slider only on home
+* Update: Improved admin panel
+* Update: Load featured slider only on home
 
 0.1.1 (06.19.12)
 ===
