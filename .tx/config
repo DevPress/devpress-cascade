@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[gather.gather]
+[cascade.cascade]
 file_filter = languages/<lang>.po
 source_file = languages/cascade.pot
 source_lang = en_US

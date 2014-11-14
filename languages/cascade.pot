@@ -443,7 +443,7 @@ msgid ""
 "href=\"%5$s\"%6$s>update now</a>."
 msgstr ""
 
-#: search.php:11
+#: search.php:15
 msgid "Search results for: %s"
 msgstr ""
 
