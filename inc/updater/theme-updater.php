@@ -89,7 +89,7 @@ function cascade_update_routine() {
 			$layout = 'sidebar-right';
 
 			// Single Column
-			if ( 'layout_1c' == $option || 'layout_hl_1c' == $option || 'layout_hr_1c' == $option ) {
+			if ( 'layout_default' == $option || 'layout_1c' == $option || 'layout_hl_1c' == $option || 'layout_hr_1c' == $option ) {
 				$layout = 'single-column';
 			}
 
@@ -107,5 +107,5 @@ function cascade_update_routine() {
 		}
 	}
 
-	// set_theme_mod( 'version', CASCADE_VERSION );
+	set_theme_mod( 'version', CASCADE_VERSION );
 }
