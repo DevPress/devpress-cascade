@@ -1,7 +1,7 @@
 <?php
 /*
  * Theme Settings
- * 
+ *
  * @package Cascade
  * @subpackage Functions
  * @version 0.1.3
@@ -13,9 +13,9 @@
 add_action( 'admin_menu', 'cascade_theme_admin_setup' );
 
 function cascade_theme_admin_setup() {
-    
+
 	global $theme_settings_page;
-	
+
 	/* Get the theme settings page name */
 	$theme_settings_page = 'appearance_page_theme-settings';
 
@@ -27,7 +27,7 @@ function cascade_theme_admin_setup() {
 
 	/* Add a filter to validate/sanitize your settings. */
 	add_filter( "sanitize_option_{$prefix}_theme_settings", 'cascade_theme_validate_settings' );
-	
+
 	/* Enqueue styles */
 	add_action( 'admin_enqueue_scripts', 'cascade_admin_scripts' );
 
@@ -45,7 +45,7 @@ function cascade_theme_settings_meta_boxes() {
 		'normal',					// Which meta box holder?
 		'high'					// High/low within the meta box holder
 	);
-	
+
 	/* Add a custom meta box. */
 	add_meta_box(
 		'cascade-theme-meta-box-2',			// Name/ID
@@ -54,7 +54,7 @@ function cascade_theme_settings_meta_boxes() {
 		'appearance_page_theme-settings',		// Page to load on, leave as is
 		'side',					// Which meta box holder?
 		'high'					// High/low within the meta box holder
-	);	
+	);
 
 	/* Add additional add_meta_box() calls here. */
 }
@@ -63,7 +63,7 @@ function cascade_theme_settings_meta_boxes() {
 function cascade_theme_meta_box() { ?>
 
 	<table class="form-table">
-	
+
 		<!-- Logo upload -->
 
 		<tr>
@@ -74,7 +74,7 @@ function cascade_theme_meta_box() { ?>
 				<input type="text" id="<?php echo hybrid_settings_field_id( 'cascade_logo_url' ); ?>" name="<?php echo hybrid_settings_field_name( 'cascade_logo_url' ); ?>" value="<?php echo esc_attr( hybrid_get_setting( 'cascade_logo_url' ) ); ?>" />
 				<input id="cascade_logo_upload_button" class="button" type="button" value="Upload" />
 				<p class="description"><?php _e( 'Upload image for logo. Once uploaded, click the <strong>Insert Into Post</strong> button. If that does not work, copy the address of the image and paste it in the input field above. Next, click on <strong>Save Settings</strong> buton at the bottom of this page. The image will automatically display here after settings are saved.', 'cascade' ); ?></p>
-				
+
 				<?php /* Display uploaded image */
 				if ( hybrid_get_setting( 'cascade_logo_url' ) ) { ?>
                     <p><img src="<?php echo hybrid_get_setting( 'cascade_logo_url' ); ?>" alt=""/></p>
@@ -82,27 +82,16 @@ function cascade_theme_meta_box() { ?>
 			</td>
 		</tr>
 
-		<!-- Featured Slider -->
-		<tr>
-			<th>
-				<label for="<?php echo hybrid_settings_field_id( 'cascade_featured_slider' ); ?>"><?php _e( 'Featured Slider ID:', 'cascade' ); ?></label>
-			</th>
-			<td>
-				<p><input type="text" id="<?php echo hybrid_settings_field_id( 'cascade_featured_slider' ); ?>" name="<?php echo hybrid_settings_field_name( 'cascade_featured_slider' ); ?>" value="<?php echo esc_attr( hybrid_get_setting( 'cascade_featured_slider' ) ); ?>" /></p>
-				<p class="description"><?php _e( 'If the <a href="http://devpress.com/plugins/sliders">DevPress Sliders</a> plugin is installed, enter the ID number of the slider you want to feature on your blog home page.', 'cascade' ); ?></p>
-			</td>
-		</tr>
-
 		<!-- End custom form elements. -->
 	</table><!-- .form-table --><?php
-	
+
 }
 
 /* Function for displaying the second meta box. */
 function cascade_theme_meta_box_2() { ?>
 
 	<table class="form-table">
-		
+
 		<!-- Global Layout -->
 		<tr>
 			<th>
@@ -126,18 +115,17 @@ function cascade_theme_meta_box_2() { ?>
 			    </select>
 			    <span class="description"><?php _e( 'Set the layout for the entire site. The default layout is 2 columns with content on the left.', 'cascade' ); ?></span>
 			</td>
-		</tr>	
-		
+		</tr>
+
 		<!-- End custom form elements. -->
-	</table><!-- .form-table -->		
-	
-<?php }		
+	</table><!-- .form-table -->
+
+<?php }
 
 /* Validate theme settings. */
 function cascade_theme_validate_settings( $settings ) {
 
 	$settings['cascade_logo_url'] = esc_url_raw( $settings['cascade_logo_url'] );
-	$settings['cascade_featured_slider'] = absint ( $settings['cascade_featured_slider'] );
 	$settings['cascade_global_layout'] = wp_filter_nohtml_kses( $settings['cascade_global_layout'] );
 
     /* Return the array of theme settings. */
@@ -146,14 +134,12 @@ function cascade_theme_validate_settings( $settings ) {
 
 /* Enqueue scripts (and related stylesheets) */
 function cascade_admin_scripts( $hook_suffix ) {
-    
+
     global $theme_settings_page;
-	
+
     if ( $theme_settings_page == $hook_suffix ) {
 
 	    wp_enqueue_script( 'cascade-admin', get_template_directory_uri() . '/js/cascade-admin.js', array( 'jquery', 'media-upload' ), '20121004', false );
 
     }
 }
-
-?>

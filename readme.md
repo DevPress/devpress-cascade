@@ -8,6 +8,13 @@ This theme can be installed under "Appearance" > "Themes".  Click on the "Add Ne
 
 ## Change Log
 
+0.2.1 (11.12.14)
+===
+
+* Update: French translations (@fxbenard)
+* Update: Remove slider options
+
+
 0.2.0 (10.03.14)
 ===
 

@@ -17,7 +17,7 @@ $updater = new DevPress_Theme_Updater_Admin(
 		'remote_api_url' => 'https://devpress.com', // Site where EDD is hosted
 		'item_name' => 'Cascade', // Name of theme
 		'theme_slug' => 'cascade', // Theme slug
-		'version' => '0.2.0', // The current version of this theme
+		'version' => '0.2.1', // The current version of this theme
 		'author' => 'DevPress' // The author of this theme
 	)
 
