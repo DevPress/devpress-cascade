@@ -31,11 +31,11 @@ if ( post_password_required() ) {
 		</h3>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
-		<nav id="comment-nav-above" class="comment-navigation" role="navigation">
+		<nav id="comment-nav-above" class="pagination comment-pagination" role="navigation">
 			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'cascade' ); ?></h1>
-			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'cascade' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'cascade' ) ); ?></div>
-		</nav><!-- #comment-nav-above -->
+			<span class="page-numbers"><?php printf( __( 'Page %1$s of %2$s', 'cascade' ), ( get_query_var( 'cpage' ) ? absint( get_query_var( 'cpage' ) ) : 1 ), get_comment_pages_count() ); ?></span>
+			<?php paginate_comments_links(); ?>
+		</nav><!-- .comment-navigation -->
 		<?php endif; // check for comment navigation ?>
 
 		<ol class="comment-list">
@@ -43,7 +43,7 @@ if ( post_password_required() ) {
 				wp_list_comments( array(
 					'style' => 'ol',
 					'short_ping' => true,
-					'avatar_size' => 50,
+					'avatar_size' => 36,
 					'callback' => 'cascade_comment_callback',
 					'short_ping' => true,
 				) );
@@ -51,11 +51,11 @@ if ( post_password_required() ) {
 		</ol><!-- .comment-list -->
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
-		<nav id="comment-nav-below" class="comment-navigation" role="navigation">
+		<nav id="comment-nav-below" class="pagination comment-pagination" role="navigation">
 			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', 'cascade' ); ?></h1>
-			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'cascade' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'cascade' ) ); ?></div>
-		</nav><!-- #comment-nav-below -->
+			<span class="page-numbers"><?php printf( __( 'Page %1$s of %2$s', 'cascade' ), ( get_query_var( 'cpage' ) ? absint( get_query_var( 'cpage' ) ) : 1 ), get_comment_pages_count() ); ?></span>
+			<?php paginate_comments_links(); ?>
+		</nav><!-- .comment-navigation -->
 		<?php endif; // check for comment navigation ?>
 
 	<?php endif; // have_comments() ?>

@@ -899,7 +899,8 @@ a:active {
   }
 
   /* Social */
-  .main-navigation .social span, #footer-navigation .social span {
+  .main-navigation .social span,
+  #footer-navigation .social span {
     margin: 0;
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
@@ -908,7 +909,8 @@ a:active {
     overflow: hidden;
   }
   .main-navigation .social a:before,
-  .main-navigation .menu-search a:before, #footer-navigation .social a:before,
+  .main-navigation .menu-search a:before,
+  #footer-navigation .social a:before,
   #footer-navigation .menu-search a:before {
     display: inline-block;
     font-family: 'cascade-icons';
@@ -918,51 +920,94 @@ a:active {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  .main-navigation .social a[href*="behance.com"]:before, #footer-navigation .social a[href*="behance.com"]:before {
+  .main-navigation .social a[href*="behance.com"]:before,
+  #footer-navigation .social a[href*="behance.com"]:before {
     content: '\f1b4';
   }
-  .main-navigation .social a[href*="dribbble.com"]:before, #footer-navigation .social a[href*="dribbble.com"]:before {
+  .main-navigation .social a[href*="dribbble.com"]:before,
+  #footer-navigation .social a[href*="dribbble.com"]:before {
     content: '\f17d';
   }
-  .main-navigation .social a[href*="facebook.com"]:before, #footer-navigation .social a[href*="facebook.com"]:before {
+  .main-navigation .social a[href*="facebook.com"]:before,
+  #footer-navigation .social a[href*="facebook.com"]:before {
     content: '\f09a';
   }
-  .main-navigation .social a[href*="flickr.com"]:before, #footer-navigation .social a[href*="flickr.com"]:before {
+  .main-navigation .social a[href*="flickr.com"]:before,
+  #footer-navigation .social a[href*="flickr.com"]:before {
     content: '\f16e';
   }
-  .main-navigation .social a[href*="github.com"]:before, #footer-navigation .social a[href*="github.com"]:before {
+  .main-navigation .social a[href*="github.com"]:before,
+  #footer-navigation .social a[href*="github.com"]:before {
     content: '\f09b';
   }
-  .main-navigation .social a[href*="linkedin.com"]:before, #footer-navigation .social a[href*="linkedin.com"]:before {
+  .main-navigation .social a[href*="linkedin.com"]:before,
+  #footer-navigation .social a[href*="linkedin.com"]:before {
     content: '\f0e1';
   }
-  .main-navigation .social a[href*="pinterest.com"]:before, #footer-navigation .social a[href*="pinterest.com"]:before {
+  .main-navigation .social a[href*="pinterest.com"]:before,
+  #footer-navigation .social a[href*="pinterest.com"]:before {
     content: '\f0d2';
   }
-  .main-navigation .social a[href*="plus.google.com"]:before, #footer-navigation .social a[href*="plus.google.com"]:before {
+  .main-navigation .social a[href*="plus.google.com"]:before,
+  #footer-navigation .social a[href*="plus.google.com"]:before {
     content: '\f0d5';
   }
   .main-navigation .social a[href*="instagr.am"]:before,
-  .main-navigation .social a[href*="instagram.com"]:before, #footer-navigation .social a[href*="instagr.am"]:before,
+  .main-navigation .social a[href*="instagram.com"]:before,
+  #footer-navigation .social a[href*="instagr.am"]:before,
   #footer-navigation .social a[href*="instagram.com"]:before {
     content: '\f16d';
   }
-  .main-navigation .social a[href*="skype.com"]:before, #footer-navigation .social a[href*="skype.com"]:before {
+  .main-navigation .social a[href*="skype.com"]:before,
+  #footer-navigation .social a[href*="skype.com"]:before {
     content: '\f17e';
   }
-  .main-navigation .social a[href*="spotify.com"]:before, #footer-navigation .social a[href*="spotify.com"]:before {
+  .main-navigation .social a[href*="spotify.com"]:before,
+  #footer-navigation .social a[href*="spotify.com"]:before {
     content: '\f1bc';
   }
-  .main-navigation .social a[href*="tumblr.com"]:before, #footer-navigation .social a[href*="tumblr.com"]:before {
+  .main-navigation .social a[href*="tumblr.com"]:before,
+  #footer-navigation .social a[href*="tumblr.com"]:before {
     content: '\f173';
   }
-  .main-navigation .social a[href*="twitter.com"]:before, #footer-navigation .social a[href*="twitter.com"]:before {
+  .main-navigation .social a[href*="twitter.com"]:before,
+  #footer-navigation .social a[href*="twitter.com"]:before {
     content: '\f099';
   }
-  .main-navigation .social a[href*="vimeo.com"]:before, #footer-navigation .social a[href*="vimeo.com"]:before {
+  .main-navigation .social a[href*="vimeo.com"]:before,
+  #footer-navigation .social a[href*="vimeo.com"]:before {
     content: '\f194';
   }
 }
+/* Footer Navigation */
+#footer-navigation {
+  font-family: "Oswald", "Helvetica Nueue", sans-serif;
+  font-size: 13px;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  letter-spacing: .03em;
+  float: left;
+}
+#footer-navigation ul {
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#footer-navigation li {
+  display: inline-block;
+  font-weight: 300;
+}
+#footer-navigation a {
+  padding: 0 15px;
+  border: none;
+  display: inline-block;
+}
+#footer-navigation ul a:last-of-type {
+  padding-left: 0;
+}
+
 /* Content
 --------------------------------------------------------------*/
 .hentry {
@@ -1195,7 +1240,7 @@ a:active {
   background: #f6f6f6;
   margin: 0 0 20px;
   padding: 20px;
-  font-size: 20px;
+  font-size: 18px;
   border-right: 4px solid #000;
 }
 
@@ -1212,10 +1257,6 @@ a:active {
 
 #content blockquote p:last-of-type {
   margin-bottom: 0;
-}
-
-.single #content blockquote {
-  font-size: 18px;
 }
 
 /* Search & 404
@@ -1321,15 +1362,9 @@ a:active {
 .site-main .post-navigation {
   clear: both;
   overflow: hidden;
-}
-
-.site-main .paging-navigation,
-.site-main .post-navigation {
   background: #fcfcfc;
 }
 
-.site-main .comment-navigation,
-.site-main #comment-nav-below,
 .comment-navigation .nav-previous,
 .paging-navigation .nav-previous,
 .post-navigation .nav-previous,
@@ -1653,6 +1688,7 @@ a:active {
 #colophon {
   font-family: "Oswald", "Helvetica Nueue", sans-serif;
   font-size: 13px;
+  line-height: 2;
   padding: 30px 0;
   background: #000;
   color: #999;
@@ -1661,6 +1697,10 @@ a:active {
 
 #colophon a {
   color: #fff;
+}
+
+#colophon .site-info {
+  float: right;
 }
 
 @media screen and (min-width: 510px) and (max-width: 880px) {

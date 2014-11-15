@@ -1227,7 +1227,7 @@ a:active {
   background: #f6f6f6;
   margin: 0 0 20px;
   padding: 20px;
-  font-size: 20px;
+  font-size: 18px;
   border-left: 4px solid #000;
 }
 
@@ -1244,10 +1244,6 @@ a:active {
 
 #content blockquote p:last-of-type {
   margin-bottom: 0;
-}
-
-.single #content blockquote {
-  font-size: 18px;
 }
 
 /* Search & 404
@@ -1348,38 +1344,29 @@ a:active {
 
 /* Paging Navigation
 --------------------------------------------------------------*/
-.site-main .comment-navigation,
 .site-main .paging-navigation,
-.site-main .post-navigation {
+.site-main .post-navigation,
+.site-main .comment-pagination {
   clear: both;
   overflow: hidden;
-}
-
-.site-main .paging-navigation,
-.site-main .post-navigation {
   background: #fcfcfc;
 }
 
-.site-main .comment-navigation,
-.site-main #comment-nav-below,
-.comment-navigation .nav-previous,
 .paging-navigation .nav-previous,
 .post-navigation .nav-previous,
-.comment-navigation .nav-next,
 .paging-navigation .nav-next,
 .post-navigation .nav-next,
-.loop-pagination {
+.loop-pagination,
+.comment-pagination {
   padding: 4% 8% 4%;
 }
 
-.comment-navigation .nav-previous,
 .paging-navigation .nav-previous,
 .post-navigation .nav-previous {
   float: left;
   width: 50%;
 }
 
-.comment-navigation .nav-next,
 .paging-navigation .nav-next,
 .post-navigation .nav-next {
   float: right;
@@ -1421,11 +1408,17 @@ a:active {
   display: inline-block;
 }
 
-.post-navigation {
+.post-navigation,
+#comment-nav-above {
   border-top: 1px solid #eee;
 }
 
-.loop-pagination {
+#comment-nav-above {
+  margin-top: 4%;
+}
+
+.loop-pagination,
+.comment-pagination {
   font-size: 12px;
   line-height: 22px;
   font-family: "Oswald", "Helvetica Nueue", sans-serif;
@@ -1504,7 +1497,7 @@ a:active {
 
 .comment, .trackback, .pingback {
   position: relative;
-  padding: 0 0 0 80px;
+  padding: 0 0 0 56px;
 }
 
 .comment-body {
@@ -1522,7 +1515,7 @@ a:active {
   position: absolute;
   top: 0;
   left: 0;
-  border: 3px solid #000;
+  border-radius: 3px;
 }
 
 .trackback .avatar, .pingback .avatar {
@@ -1909,7 +1902,12 @@ object {
   font-weight: 600;
 }
 
-.oswald .loop-pagination {
+.oswald .comment-author a {
+  font-weight: 400;
+}
+
+.oswald .loop-pagination,
+.oswald .comment-pagination {
   font-weight: 300;
 }
 

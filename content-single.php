@@ -12,7 +12,7 @@
 
 	<?php if ( has_post_thumbnail() && get_theme_mod( 'post-featured-images', 1 ) ) { ?>
 	<figure class="entry-image">
-		<?php the_post_thumbnail( $size ); ?>
+		<?php the_post_thumbnail(); ?>
 	</figure>
 	<?php } ?>
 
