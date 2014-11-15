@@ -24,7 +24,7 @@
 
 		<?php if ( get_theme_mod( 'footer-text', customizer_library_get_default( 'footer-text' ) ) != '' ) : ?>
 		<div class="site-info">
-			<?php echo get_theme_mod( 'footer-text', customizer_library_get_default( 'footer-text' ) ); ?>
+			<?php echo do_shortcode( get_theme_mod( 'footer-text', customizer_library_get_default( 'footer-text' ) ) ); ?>
 		</div><!-- .site-info -->
 		<?php endif; ?>
 

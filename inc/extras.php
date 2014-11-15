@@ -190,3 +190,15 @@ function cascade_grunion_style() {
 	wp_deregister_style( 'grunion.css' );
 }
 add_action( 'wp_print_styles', 'cascade_grunion_style' );
+
+
+/**
+ * Shortcode to display the current year.
+ *
+ * @access public
+ * @return string
+ */
+function cascade_the_year_shortcode() {
+	return date_i18n( 'Y' );
+}
+add_shortcode( 'the-year', 'cascade_the_year_shortcode' );
