@@ -65,11 +65,7 @@ msgid "Comment navigation"
 msgstr ""
 
 #: comments.php:36 comments.php:56
-msgid "&larr; Older Comments"
-msgstr ""
-
-#: comments.php:37 comments.php:57
-msgid "Newer Comments &rarr;"
+msgid "Page %1$s of %2$s"
 msgstr ""
 
 #: comments.php:67
