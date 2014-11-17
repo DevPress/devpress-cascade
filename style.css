@@ -1135,7 +1135,7 @@ a:active {
 }
 
 .author-avatar img {
-  border: 3px solid #333;
+  border-radius: 3px;
 }
 
 .author-description {
@@ -1164,6 +1164,7 @@ a:active {
 
 .posted-on-meta:before,
 .byline-meta:before,
+.comments-meta:before,
 .category-meta:before,
 .tag-meta:before {
   font-family: 'cascade-icons';
@@ -1182,6 +1183,10 @@ a:active {
 
 .byline-meta:before {
   content: "\f007";
+}
+
+.comments-meta:before {
+  content: "\f086";
 }
 
 .category-meta:before {
@@ -1508,9 +1513,11 @@ a:active {
   list-style: none;
 }
 
-.comment, .trackback, .pingback {
+.comment,
+.trackback,
+.pingback {
   position: relative;
-  padding: 0 0 0 56px;
+  padding: 0 0 0 60px;
 }
 
 .comment-body {
@@ -1531,7 +1538,8 @@ a:active {
   border-radius: 3px;
 }
 
-.trackback .avatar, .pingback .avatar {
+.trackback .avatar,
+.pingback .avatar {
   background: #ddd;
   color: #fff;
   font-size: 20px;
@@ -1540,6 +1548,10 @@ a:active {
   width: 50px;
   text-align: center;
   line-height: 50px;
+}
+
+.comment-author .fn a {
+  color: #555;
 }
 
 .comment-by-post-author .comment-author .fn:after {
@@ -1554,7 +1566,7 @@ a:active {
 }
 
 .comment-meta {
-  padding-right: 80px;
+  padding-right: 60px;
 }
 
 .comment-metadata {
@@ -1587,7 +1599,7 @@ a:active {
 }
 
 .comment-list .children .children .comment {
-  margin-left: -80px;
+  margin-left: -60px;
 }
 
 #reply-title {

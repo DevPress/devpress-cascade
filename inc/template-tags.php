@@ -101,6 +101,12 @@ function cascade_post_meta( $type = 'post' ) {
 		echo '<span class="byline-meta meta-group"><span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span></span>';
 	}
 
+	if ( ! post_password_required() && comments_open() ) :
+		echo '<span class="comments-meta meta-group">';
+		comments_popup_link( __( 'Comment', 'cascade' ), __( '1 Comment', 'cascade' ), __( '% Comments', 'cascade' ) );
+		echo '</span>';
+	endif;
+
 	/* translators: used between list items, there is a space after the comma */
 	if ( 'download' == $type) {
 		$category_list =  get_the_term_list( get_the_ID(), 'download_category', '', ', ', '' );
