@@ -40,6 +40,7 @@ body {
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
+	-ms-flex-preferred-size: auto;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: $secondary-font;
@@ -460,7 +461,6 @@ a:active {
 #content blockquote cite {
 	display: inline-block;
 	margin-top:.5em;
-	font-size:16px;
 }
 #content blockquote cite:before {
 	content: '\2014';
