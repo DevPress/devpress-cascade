@@ -112,6 +112,11 @@ function cascade_update_routine() {
 
 			set_theme_mod( 'theme_layout', $layout );
 		}
+
+		// These didn't show in previous versions
+		set_theme_mod( 'archive-featured-images', 0 );
+		set_theme_mod( 'post-featured-images', 0 );
+
 	}
 
 	set_theme_mod( 'version', CASCADE_VERSION );
