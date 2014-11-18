@@ -79,10 +79,11 @@ function cascade_update_routine() {
 		if ( isset( $options['footer_insert'] ) ) {
 
 			global $allowed_html;
-			$text = ['footer_insert'];
-			$text = str_replace( '[SITE-LINK]', sprintf( '<a href="%s" rel="home">%s</a>', esc_url( home_url() ), get_bloginfo( 'name' ) ), $text );
-			$text = str_replace( '[WP-LINK]', sprintf( '<a href="%s">%s</a>', esc_url( 'https://wordpress.org' ), 'WordPress' ), $text );
-			$text = str_replace( '[THEME-LINK]', sprintf( '<a href="%s">%s</a>', esc_url( 'https://devpress.com' ), 'DevPress' ), $text );
+			$text = $options['footer_insert'];
+
+			$text = str_replace( "[site-link]", sprintf( '<a href="%s" rel="home">%s</a>', esc_url( home_url() ), get_bloginfo( 'name' ) ), $text );
+			$text = str_replace( "[wp-link]", sprintf( '<a href="%s">%s</a>', esc_url( 'https://wordpress.org' ), 'WordPress' ), $text );
+			$text = str_replace( "[theme-link]", sprintf( '<a href="%s">%s</a>', esc_url( 'https://devpress.com' ), 'DevPress' ), $text );
 
 			set_theme_mod( 'footer-text', wp_kses( $text, $allowed_html ) );
 		}
