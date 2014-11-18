@@ -131,7 +131,7 @@ function cascade_fonts() {
 
 	// Site title font only required when logo not in use
 	if ( ! get_theme_mod( 'logo', 0 ) ) :
-		$fonts[0] = get_theme_mod( 'site-title-font', customizer_library_get_default( 'site-title-font' ) );
+		$fonts[0] = get_theme_mod( 'site-header-font', customizer_library_get_default( 'site-title-font' ) );
 	endif;
 
 	$fonts[1] = get_theme_mod( 'primary-font', customizer_library_get_default( 'primary-font' ) );
