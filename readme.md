@@ -19,12 +19,12 @@ If you have Grunt installed, just run `npm install` in the theme directory to do
 
 ## Change Log
 
-Development
+0.3.0 (11.18.14)
 ===
 
 * Major Update: Complete rewrite of theme templates and styles
 * Enhancement: Additional font and styling options
-* Update: Removal of three-column layout options
+* Update: Remove three-column layout options
 
 0.2.1 (11.12.14)
 ===
