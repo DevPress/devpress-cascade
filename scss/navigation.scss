@@ -53,7 +53,6 @@
 	a:hover {
 		opacity:.6;
 	}
-	.current_page_item a,
 	.current-menu-item a {
 		font-weight:600;
 	}
@@ -225,7 +224,6 @@
 	}
 
 	#primary-navigation {
-		.current_page_item a,
 		.current-menu-item a {
 			font-weight:300;
 			color:#aaa;
@@ -255,7 +253,6 @@
 		li {
 			padding-bottom: 12px;
 		}
-		.current_page_item a,
 		.current-menu-item a {
 			font-weight:300;
 			color:#333;
@@ -277,9 +274,11 @@
 			border-right: 0;
 			border-bottom:1px solid #111;
 		}
-		ul ul .current_page_item a,
 		ul ul .current-menu-item a {
 			color:#fff;
+		}
+		.current-menu-item ul a {
+			color: #aaa;
 		}
 		ul ul li:last-child a {
 			border-bottom: none;

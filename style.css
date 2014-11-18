@@ -4,7 +4,7 @@ Theme URI: https://devpress.com/cascade
 Author: DevPress
 Author URI: https://devpress.com
 Description: Cascade description.
-Version: 0.3.0
+Version: 0.3.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: cascade
@@ -687,7 +687,6 @@ a:active {
 .main-navigation a:hover {
   opacity: .6;
 }
-.main-navigation .current_page_item a,
 .main-navigation .current-menu-item a {
   font-weight: 600;
 }
@@ -841,7 +840,6 @@ a:active {
     margin-top: 0;
   }
 
-  #primary-navigation .current_page_item a,
   #primary-navigation .current-menu-item a {
     font-weight: 300;
     color: #aaa;
@@ -869,7 +867,6 @@ a:active {
   #secondary-navigation li {
     padding-bottom: 12px;
   }
-  #secondary-navigation .current_page_item a,
   #secondary-navigation .current-menu-item a {
     font-weight: 300;
     color: #333;
@@ -891,9 +888,11 @@ a:active {
     border-right: 0;
     border-bottom: 1px solid #111;
   }
-  #secondary-navigation ul ul .current_page_item a,
   #secondary-navigation ul ul .current-menu-item a {
     color: #fff;
+  }
+  #secondary-navigation .current-menu-item ul a {
+    color: #aaa;
   }
   #secondary-navigation ul ul li:last-child a {
     border-bottom: none;

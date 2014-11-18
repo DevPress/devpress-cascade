@@ -8,7 +8,7 @@
 /**
  * The current version of the theme.
  */
-define( 'CASCADE_VERSION', '0.3.0' );
+define( 'CASCADE_VERSION', '0.3.1' );
 
 /**
  * Set the content width based on the theme's design and stylesheet.
@@ -84,7 +84,7 @@ function cascade_setup() {
 			'sidebar-right' => __( '2 Columns: Content / Sidebar', 'cascade' ),
 			'sidebar-left' => __( '2 Columns: Sidebar / Content', 'cascade' )
 		),
-		array( 'default' => is_rtl() ? 'sidebar-right' :'sidebar-left' )
+		array( 'default' => 'single-column' )
 	);
 }
 endif; // cascade_setup
