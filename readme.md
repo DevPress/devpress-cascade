@@ -19,6 +19,11 @@ If you have Grunt installed, just run `npm install` in the theme directory to do
 
 ## Change Log
 
+Development
+---
+
+* Update: French translations (@fxbenard)
+
 0.3.1 (11.18.14)
 ---
 
