@@ -23,6 +23,7 @@ Development
 ---
 
 * Update: French translations (@fxbenard)
+* Update: Finnish translations (@samikeijonen)
 
 0.3.1 (11.18.14)
 ---
