@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cascade 0.3.1\n"
+"Project-Id-Version: Cascade 0.3.2\n"
 "Report-Msgid-Bugs-To: https://devpress.com/\n"
 "POT-Creation-Date: 2014-11-14 16:50:15+00:00\n"
 "MIME-Version: 1.0\n"
@@ -476,7 +476,11 @@ msgid "https://devpress.com/cascade"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Cascade description."
+msgid ""
+"Cascade is a modern theme great for photography websites, personal blogs, "
+"restaurants and small business. Choose your own fonts, update header "
+"colors, or upload a logo using the theme customizer. Multiple menu "
+"locations, layouts, social icons, and widget areas are available."
 msgstr ""
 
 #. Author of the plugin/theme

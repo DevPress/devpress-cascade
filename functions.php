@@ -8,7 +8,7 @@
 /**
  * The current version of the theme.
  */
-define( 'CASCADE_VERSION', '0.3.1' );
+define( 'CASCADE_VERSION', '0.3.2' );
 
 /**
  * Set the content width based on the theme's design and stylesheet.
