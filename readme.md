@@ -19,6 +19,11 @@ If you have Grunt installed, just run `npm install` in the theme directory to do
 
 ## Change Log
 
+0.3.3 (12.06.14)
+---
+
+* Fix: Footer layout issues in IE11
+
 0.3.2 (11.26.14)
 ---
 

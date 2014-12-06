@@ -4,7 +4,7 @@ Theme URI: https://devpress.com/cascade
 Author: DevPress
 Author URI: https://devpress.com
 Description: Cascade is a modern theme great for photography websites, personal blogs, restaurants and small business. Choose your own fonts, update header colors, or upload a logo using the theme customizer. Multiple menu locations, layouts, social icons, and widget areas are available.
-Version: 0.3.2
+Version: 0.3.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: cascade
@@ -393,6 +393,10 @@ body.rtl {
 
 /* Theme Globals
 -------------------------------------------------------------- */
+html {
+  height: 100%;
+}
+
 body {
   font-family: "Crimson Text", Georgia, serif;
   background: #f7f7f7;
@@ -400,17 +404,16 @@ body {
   font-size: 17px;
   line-height: 1.4;
   word-wrap: break-word;
+  min-height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  min-height: 100vh;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
-  -ms-flex-preferred-size: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -472,9 +475,9 @@ a:active {
 -------------------------------------------------------------- */
 #page {
   -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
 }
 
 #content {
