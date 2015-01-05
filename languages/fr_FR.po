@@ -1,4 +1,4 @@
-# Copyright (C) 2014 DevPress
+# Copyright (C) 2015 DevPress
 # This file is distributed under the GNU General Public License v2 or later.
 # Translators:
 # FxB <fxb@wp-translations.org>, 2014
@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Cascade\n"
 "Report-Msgid-Bugs-To: https://devpress.com/\n"
 "POT-Creation-Date: 2014-11-14 16:50:15+00:00\n"
-"PO-Revision-Date: 2014-12-01 20:32+0000\n"
-"Last-Translator: FxB <fxb@wp-translations.org>\n"
+"PO-Revision-Date: 2015-01-05 16:48+0000\n"
+"Last-Translator: Devin Price <devin@wptheming.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/cascade/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -319,6 +319,10 @@ msgstr "http://wordpress.org/"
 #: inc/mods.php:20
 msgid "%1$s by %2$s."
 msgstr "%1$s par %2$s."
+
+#: inc/mods.php:21
+msgid "Cascade Theme"
+msgstr ""
 
 #: inc/template-tags.php:21
 msgid "Posts navigation"

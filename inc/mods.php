@@ -18,7 +18,7 @@ function cascade_get_default_footer_text() {
 	$text .= '<span class="sep"> | </span>';
 	$text .= sprintf(
 		__( '%1$s by %2$s.', 'cascade' ),
-			'Cascade Theme',
+			__( 'Cascade Theme', 'cascade' ),
 			'<a href="http://devpress.com/" rel="designer">DevPress</a>'
 	);
 	return $text;

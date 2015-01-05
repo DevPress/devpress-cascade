@@ -19,6 +19,11 @@ If you have Grunt installed, just run `npm install` in the theme directory to do
 
 ## Change Log
 
+Development
+---
+
+* Update: Make all of footer credits translatable
+
 0.3.3 (12.06.14)
 ---
 
